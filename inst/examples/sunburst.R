@@ -6,7 +6,7 @@ library(htmltools)
 library(htmlwidgets)
 library(d3r)
 
-html_deps_d2b <- function(){
+html_dependencies_d2b <- function(){
   list(
     d3r::d3_dep_v4(offline = FALSE),
     htmltools::htmlDependency(
@@ -18,18 +18,15 @@ html_deps_d2b <- function(){
   )
 }
 
-sunburstChart <- function(...){
+vueSunburstChart <- function(...){
+  vuer::vueComponents$register("sunburst-chart" = "d2b.vueChartSunburst")
   tag('sunburst-chart', list(...))  %>%
-    appendDependencies(html_deps_d2b())
+    appendDependencies(html_dependencies_d2b())
 }
 
-vueComponent <- function(v, ...){
-  v$x$components <- modifyList(v$x$components, list(...))
-  return(v)
-}
 
 ui <- tags$div(style = 'height:400px',
-  sunburstChart(":data" = "chart_data", ":config" = "chart_config"),
+  vueSunburstChart(":data" = "chart_data", ":config" = "chart_config"),
   actionButton('update_data', 'Update Data')
 ) %>%
   Vue(
@@ -42,9 +39,6 @@ ui <- tags$div(style = 'height:400px',
         chart.label((d) => d.name);
         chart.sunburst().size((d) => d.x);
       }")
-    ),
-    components = list(
-      "sunburst-chart" = JS("d2b.vueChartSunburst")
     ),
     elementId = 'mychart',
     width = '100%'
