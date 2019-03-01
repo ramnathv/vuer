@@ -1,0 +1,14 @@
+Package: vuer
+Title: What the Package Does (One Line, Title Case)
+Version: 0.1
+Authors@R: 
+    person(given = "Ramnath",
+           family = "Vaidyanathan",
+           role = c("aut", "cre"),
+           email = "ramnath@datacamp.com")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/ramnathv/vuer
+BugReports: https://github.com/ramnathv/vuer/issues
