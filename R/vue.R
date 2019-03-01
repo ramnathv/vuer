@@ -26,7 +26,7 @@ vue <- function(html, data = list(), dependencies = list(), watch = list(),
   if (length(data) > 0 && is.list(data)){
     to_watch <- names(data)[endsWith(names(data), "_")]
     watch <- if (length(to_watch) > 0){
-      append(watch, do.call(vueWatch, trim_underscore(to_watch)))
+      append(watch, do.call(vueUpdateShinyInputs, trim_underscore(to_watch)))
     } else {
       list()
     }
@@ -174,15 +174,19 @@ vueProxy <- function(outputId, session = shiny::getDefaultReactiveDomain(),
   )
 }
 
+#' Update data in a Vue instance
 #' @export
-vueUpdate <- function(proxy, ...){
+#' @rdname vueProxy
+vueUpdateData <- function(proxy, ...){
   message <- list(id = proxy$id, data = as_props_list(list(...)))
   proxy$session$sendCustomMessage(type = "updateProp", message = message)
   return(proxy)
 }
 
+#' Update Shiny Input
+#'
 #' @export
-vueWatch <- function(...){
+vueUpdateShinyInputs <- function(...){
   dots <- list(...)
   dots %>%
     purrr::map(~ {

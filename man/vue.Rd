@@ -11,10 +11,27 @@ Vue(html, data = list(), dependencies = list(), ...,
 Create a Vue App
 }
 \examples{
+library(htmltools)
 tags$div(
   tags$label('Enter your name'),
   tags$input(type = "text", "v-model" = "name"),
   tags$p("Hello {{name}}")
   ) \%>\%
   Vue(data = list(name = ""))
+
+if (interactive()){
+  library(shiny)
+  ui <- tags$div(
+    tags$label('Enter your name'),
+    tags$input(type = "text", "v-model" = "name"),
+    textOutput("greeting")
+  ) \%>\%
+    Vue(data = list(name_ = ""))
+  server <- function(input, output, session){
+    output$greeting <- renderText({
+      paste("Hello", input$name)
+    })
+  }
+  shinyApp(ui = ui, server = server)
+}
 }

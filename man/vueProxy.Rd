@@ -2,13 +2,18 @@
 % Please edit documentation in R/vue.R
 \name{vueProxy}
 \alias{vueProxy}
+\alias{vueUpdateData}
 \title{Send commands to a Vue instance in a Shiny app}
 \usage{
 vueProxy(outputId, session = shiny::getDefaultReactiveDomain(),
   deferUntilFlush = TRUE)
+
+vueUpdateData(proxy, ...)
 }
 \description{
 Send commands to a Vue instance in a Shiny app
+
+Update data in a Vue instance
 }
 \examples{
 ui <- div(

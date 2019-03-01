@@ -38,7 +38,7 @@ It is easy to let Vue communicate with Shiny. All it takes is adding an undersco
 ui <- tags$div(
   tags$label('Enter your name'),
   tags$input(type = "text", "v-model" = "name"),
-  textOutput("greeting")
+  uiOutput("greeting")
 ) %>% 
   Vue(
     data = list(name_ = "")
@@ -46,8 +46,8 @@ ui <- tags$div(
 
 
 server <- function(input, output, session){
-  output$greeting <- renderText({
-    paste("Hello", input$name)
+  output$greeting <- renderUI({
+    tags$p(paste("Hello", input$name))
   })
 }
 
@@ -67,7 +67,9 @@ ui <- fluidPage(
   titlePanel(title = 'Shiny -> Vue'),
   mainPanel(
     plotOutput('plot', brush = brushOpts('plot_brush')),
-    tags$pre(tags$code("{{plot_brush}}")) %>% 
+    tags$pre("v-if" = "plot_brush !== null", 
+      tags$code("{{plot_brush}}")
+    ) %>% 
       Vue(data = list(plot_brush = c()), elementId = "app")
   )
 )
@@ -79,7 +81,7 @@ server <- function(input, output, session){
   })
   observeEvent(input$plot_brush, {
     vueProxy("app") %>% 
-      vueUpdate(plot_brush = input$plot_brush)
+      vueUpdateData(plot_brush = input$plot_brush)
   })
 }
 shinyApp(ui = ui, server = server)
