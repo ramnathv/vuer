@@ -87,5 +87,6 @@ server <- function(input, output, session){
 shinyApp(ui = ui, server = server)
 ```
 
+## Acknowledgements
 
-
+This package was inspired by Kenton Russell's [experiments](https://github.com/timelyportfolio/vueR) using Vue in R. 
