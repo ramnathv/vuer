@@ -1,0 +1,5 @@
+dependencies:
+ - name: vue
+   version: 2.6.6
+   src: htmlwidgets/lib/vue
+   script: vue.js
