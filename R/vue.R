@@ -178,7 +178,7 @@ vueProxy <- function(outputId, session = shiny::getDefaultReactiveDomain(),
 #' @export
 #' @rdname vueProxy
 vueUpdateData <- function(proxy, ...){
-  message <- list(id = proxy$id, data = as_props_list(list(...)))
+  message <- list(id = proxy$id, data = asPropsList(list(...)))
   proxy$session$sendCustomMessage(type = "updateProp", message = message)
   return(proxy)
 }
