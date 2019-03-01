@@ -13,17 +13,17 @@ html_deps_vue_tree_view <- function(){
 vueJsonTreeOutput <- function(...){
   tagList(
     tag('tree-view', list(...)) %>%
-      shinydashboard:::appendDependencies(
-        html_deps_vue_tree_view()
-      ),
+      appendDependencies(html_deps_vue_tree_view()),
     tags$script('Vue.use(TreeView)')
   )
 }
 
+## Example 1:
 div(vueJsonTreeOutput(":data" = "data")) %>%
   Vue(data = list(data = list(x = 1, y = 2)))
 
 
+## Example 2:
 ui <- fluidPage(
   titlePanel("Shiny with Vue"),
   mainPanel(
@@ -39,10 +39,14 @@ ui <- fluidPage(
 )
 
 server <- function(input,output,session){
-  output$plot1 <- renderPlot({plot(1:10)})
+  output$plot1 <- renderPlot({
+    require(ggplot2)
+    ggplot(mtcars, aes(x = mpg, y = wt)) +
+      geom_point()
+  })
   observeEvent(input$plot_brush, {
     vueProxy("app") %>%
-      vueUpdate(data = input$plot_brush)
+      vueUpdateData(data = input$plot_brush)
   })
 }
 

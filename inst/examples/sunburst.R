@@ -6,51 +6,55 @@ library(htmltools)
 library(htmlwidgets)
 library(d3r)
 
-d2b_dep <- htmltools::htmlDependency(
-  name = "d2b",
-  version = "0.0.24",
-  src = c(href = "https://unpkg.com/d2b@0.0.24/build/"),
-  script = "d2b.min.js"
-)
-
-sunburstChart <- function(...){
-  tag('sunburst-chart',
-      list(...)
-  )  %>%
-    shinydashboard:::appendDependencies(
-      d3r::d3_dep_v4(offline = FALSE)
-    ) %>%
-    shinydashboard:::appendDependencies(d2b_dep)
+html_deps_d2b <- function(){
+  list(
+    d3r::d3_dep_v4(offline = FALSE),
+    htmltools::htmlDependency(
+      name = "d2b",
+      version = "0.0.24",
+      src = c(href = "https://unpkg.com/d2b@0.0.24/build/"),
+      script = "d2b.min.js"
+    )
+  )
 }
 
-ui <- tags$div(style = 'height:400px', id = 'app',
-  sunburstChart(":data" = "chart_data", ":config" = "chart_config")
+sunburstChart <- function(...){
+  tag('sunburst-chart', list(...))  %>%
+    appendDependencies(html_deps_d2b())
+}
+
+vueComponent <- function(v, ...){
+  v$x$components <- modifyList(v$x$components, list(...))
+  return(v)
+}
+
+ui <- tags$div(style = 'height:400px',
+  sunburstChart(":data" = "chart_data", ":config" = "chart_config"),
+  actionButton('update_data', 'Update Data')
 ) %>%
   Vue(
     data = list(
-      chart_data = d3r::d3_nest(
+      chart_data_ = d3r::d3_nest(
         treemap::random.hierarchical.data(),
         value_cols = "x"
       ),
       chart_config = JS("function(chart) {
-        chart.label(function(d){return d.name});
-        chart.sunburst().size(function(d){return d.x});
+        chart.label((d) => d.name);
+        chart.sunburst().size((d) => d.x);
       }")
     ),
     components = list(
       "sunburst-chart" = JS("d2b.vueChartSunburst")
     ),
-    watch = vue_watch("data"),
     elementId = 'mychart',
     width = '100%'
   )
 
 
 server <- function(input, output, session){
-  observe({
-    invalidateLater(1000, session)
+  observeEvent(input$update_data, {
     vueProxy('mychart') %>%
-      vueUpdate(
+      vueUpdateData(
         chart_data = d3r::d3_nest(
           treemap::random.hierarchical.data(),
           value_cols = "x"
