@@ -40,6 +40,7 @@ vue <- function(html, data = list(), dependencies = list(), watch = list(),
       el = paste0("#", id),
       data = data,
       watch = watch,
+      components = vueComponents$get(),
       ...
     )
   )
@@ -197,4 +198,28 @@ vueUpdateShinyInputs <- function(...){
     }) %>%
     rlang::set_names(dots)
 }
+
+
+
+.generator <- function(){
+  .vueComponents <- list()
+  list(
+    get = function(){
+        return(.vueComponents)
+    },
+    register = function(..., .list = NULL){
+      if (is.null(.list)) .list = list(...)
+      .list <- .list %>%
+        purrr::map(htmlwidgets::JS)
+      .vueComponents <<- append(.vueComponents, .list)
+    },
+    reset = function(){
+      .vueComponents <<- list()
+    }
+  )
+}
+
+#' @export
+vueComponents <- .generator()
+
 
