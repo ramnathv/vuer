@@ -1,6 +1,4 @@
----
-title: Introduction to vuer
----
+## Harness the Power of Vue.js in R: vuer
 
 `vuer` is an R package that makes it easy to use Vue components and build Vue apps.
 
