@@ -19,9 +19,16 @@ html_dependencies_d2b <- function(){
 }
 
 vueSunburstChart <- function(...){
-  vuer::vueComponents$register("sunburst-chart" = "d2b.vueChartSunburst")
+  vuer::vueComponents$register(
+    "sunburst-chart" = "d2b.vueChartSunburst"
+  )
   tag('sunburst-chart', list(...))  %>%
     appendDependencies(html_dependencies_d2b())
+}
+
+jsFun <- function(body, ...){
+  args <- paste(c(...), collapse = ",")
+  htmlwidgets::JS(sprintf("function(%s){%s}", args, body))
 }
 
 
@@ -35,10 +42,10 @@ ui <- tags$div(style = 'height:400px',
         treemap::random.hierarchical.data(),
         value_cols = "x"
       ),
-      chart_config = JS("function(chart) {
+      chart_config = jsFun("
         chart.label((d) => d.name);
         chart.sunburst().size((d) => d.x);
-      }")
+      ", "chart")
     ),
     elementId = 'mychart',
     width = '100%'
