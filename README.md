@@ -40,14 +40,16 @@ The power of `vuer` starts truly shining when we are able to let Vue communicate
 It is dead-simple to let Vue communicate with Shiny. All it takes is adding an underscore at the end of any data variable passed to `Vue`. This automatically sets up watcher functions to update shiny when the underlying value changes, thereby triggering any reactive paths that depend on it. This example is very similar to the first one in that we let a user enter their name and display a greeting message. The key difference is that the greeting message is from Shiny on the server side.
 
 ```{r}
-ui <- tags$div(
-  tags$label('Enter your name'),
-  tags$input(type = "text", "v-model" = "name"),
-  uiOutput("greeting")
-) %>% 
+ui <- fluidPage(theme = shinythemes::shinytheme("cosmo"),
+  tags$div(
+    tags$label('Enter your name'),
+    tags$input(type = "text", "v-model" = "name"),
+    uiOutput("greeting")
+  ) %>% 
   Vue(
     data = list(name_ = "")
   )
+)
 
 
 server <- function(input, output, session){
@@ -68,10 +70,10 @@ It is equally easy to let Shiny communicate with Vue. In this example we pass th
 library(shiny)
 library(ggplot2)
 library(vuer)
-ui <- fluidPage(
+ui <- fluidPage(theme = shinythemes::shinytheme("cosmo"),
   titlePanel(title = 'Shiny -> Vue'),
   mainPanel(
-    plotOutput('plot', brush = brushOpts('plot_brush')),
+    plotOutput('plot', brush = brushOpts('plot_brush'), height = '300'),
     tags$pre("v-if" = "plot_brush !== null", 
       tags$code("{{plot_brush}}")
     ) %>% 
@@ -86,11 +88,14 @@ server <- function(input, output, session){
   })
   observeEvent(input$plot_brush, {
     vueProxy("app") %>% 
-      vueUpdateData(plot_brush = input$plot_brush)
+      vueUpdateData(plot_brush = input$plot_brush$coords_img)
   })
 }
 shinyApp(ui = ui, server = server)
 ```
+
+![shiny-vue](https://media.giphy.com/media/c6XuxhQrLTUid7m76o/giphy.gif)
+
 
 ## Acknowledgements
 
