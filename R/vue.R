@@ -211,7 +211,7 @@ vueUpdateShinyInputs <- function(...){
       if (is.null(.list)) .list = list(...)
       .list <- .list %>%
         purrr::map(htmlwidgets::JS)
-      .vueComponents <<- append(.vueComponents, .list)
+      .vueComponents <<- modifyList(.vueComponents, .list)
     },
     reset = function(){
       .vueComponents <<- list()
