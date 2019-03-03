@@ -20,13 +20,16 @@ remotes::install_github('ramnathv/vuer')
 We can use `vuer` to create purely client-side web-apps taking advantage of its simple API and two-way data bindings. In this simple example, we let a user enter their name and display a greeting message. 
 
 ```{r}
-tags$div(
-  tags$label('Enter your name'),
+tags$div(style = 'height:100px;width:400px;',
+  tags$label('Enter your name: '),
   tags$input(type = "text", "v-model" = "name"),
-  tags$p("Hello {{name}}")
+  tags$p(class = "lead", "Hello {{name}}")
 ) %>% 
+  appendDependencies(htmldeps::html_dependency_bootstrap('cosmo')) %>% 
   Vue(data = list(name = ""))
 ```
+
+![hello-world](https://media.giphy.com/media/ce669rsmXJYhRqt09u/giphy.gif)
 
 The power of `vuer` starts truly shining when we are able to let Vue communicate with Shiny. This opens up an unlimited range of possibilities that we will explore in detail. The next two examples explore how Vue and Shiny can communicate with each other.
 
