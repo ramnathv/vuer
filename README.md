@@ -29,7 +29,7 @@ tags$div(style = 'height:100px;width:400px;',
   Vue(data = list(name = ""))
 ```
 
-![hello-world](https://media.giphy.com/media/ce669rsmXJYhRqt09u/giphy.gif)
+![hello-world](https://media.giphy.com/media/QmKxl4fJZtAEHkepJM/giphy.gif)
 
 The power of `vuer` starts truly shining when we are able to let Vue communicate with Shiny. This opens up an unlimited range of possibilities that we will explore in detail. The next two examples explore how Vue and Shiny can communicate with each other.
 
