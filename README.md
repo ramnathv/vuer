@@ -25,7 +25,9 @@ tags$div(style = 'height:100px;width:400px;',
   tags$input(type = "text", "v-model" = "name"),
   tags$p(class = "lead", "Hello {{name}}")
 ) %>% 
-  appendDependencies(htmldeps::html_dependency_bootstrap('cosmo')) %>% 
+  appendDependencies(
+    htmldeps::html_dependency_bootstrap('cosmo')
+  ) %>%
   Vue(data = list(name = ""))
 ```
 
