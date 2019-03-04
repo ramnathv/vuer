@@ -1,5 +1,5 @@
 library(htmltools)
-library(vuepkg)
+library(vuer)
 library(magrittr)
 
 # Example 1: Hello World
