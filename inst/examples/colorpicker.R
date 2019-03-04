@@ -1,4 +1,6 @@
 library(vuer)
+library(ggplot2)
+library(shiny)
 
 html_dependencies_vue_color <- function(){
   htmltools::htmlDependency(
@@ -30,7 +32,7 @@ vueColorPickerInput <- function(type = types, ...){
 
 ui <- div(
   vueColorPickerInput(type = "sketch"),
-  plotOutput('plot')
+  shiny::plotOutput('plot')
 ) %>%
   Vue(
     data = list(colors_ = '#fff')
@@ -47,4 +49,4 @@ server <- function(input, output, session){
    })
 }
 
-shinyApp(ui = ui, server = server)
+shiny::shinyApp(ui = ui, server = server)
