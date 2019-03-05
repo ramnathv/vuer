@@ -1,4 +1,4 @@
-## Harness the Power of Vue.js in R: vuer
+## vuer <img src="https://i.imgur.com/HHzsuI9.png" width='60px' height='20px'/>
 
 `vuer` is an R package that makes it easy to use Vue components and build Vue apps.
 
