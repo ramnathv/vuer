@@ -29,3 +29,19 @@ appendDependencies <- function (x, value){
   htmlDependencies(x) <- c(old, value)
   x
 }
+
+#' @importFrom purrr map
+#' @importFrom htmltools tags
+#' @export vtags
+vtags <- names(htmltools::tags) %>%
+  purrr::map(~ function(...){
+    contents <- list(...)
+    if (!is.null(names(contents))){
+      names(contents) <- gsub("^v(.*)", "v-\\1", names(contents))
+      names(contents) <- gsub(
+        "^v-([^\\.]*)(\\.)(.*)$", "v-\\1:\\3", names(contents)
+      )
+    }
+    htmltools::tag(.x, contents)
+  }) %>%
+  rlang::set_names(names(tags))
