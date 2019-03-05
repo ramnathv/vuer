@@ -1,4 +1,4 @@
-## vuer <img src="https://i.imgur.com/HHzsuI9.png" height='20px'/>
+## vuer <img src="https://i.imgur.com/HHzsuI9.png" width='70px'/>
 
 `vuer` is an R package that makes it easy to use Vue components and build Vue apps.
 
