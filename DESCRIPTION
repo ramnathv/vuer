@@ -1,12 +1,12 @@
 Package: vuer
-Title: What the Package Does (One Line, Title Case)
+Title: Harness the Power of Vue in R
 Version: 0.1
 Authors@R: 
     person(given = "Ramnath",
            family = "Vaidyanathan",
            role = c("aut", "cre"),
            email = "ramnath@datacamp.com")
-Description: What the package does (one paragraph).
+Description: vuer is an R package that makes it easy to use Vue components and build Vue apps.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
