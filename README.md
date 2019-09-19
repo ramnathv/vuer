@@ -1,4 +1,6 @@
-## vuer <img src="https://i.imgur.com/HHzsuI9.png" width='70px'/>
+# vuer <img src="https://i.imgur.com/HHzsuI9.png" align='right' width='120px'/>
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 `vuer` is an R package that makes it easy to use Vue components and build Vue apps.
 
@@ -9,7 +11,7 @@
 
 You can install `vuer` from github using `remotes` or `devtools`.
 
-```{r}
+```r
 remotes::install_github('ramnathv/vuer')
 ```
 
@@ -19,7 +21,7 @@ remotes::install_github('ramnathv/vuer')
 
 We can use `vuer` to create purely client-side web-apps taking advantage of its simple API and two-way data bindings. In this simple example, we let a user enter their name and display a greeting message. 
 
-```{r}
+```r
 tags$div(style = 'height:100px;width:400px;',
   tags$label('Enter your name: '),
   tags$input(type = "text", "v-model" = "name"),
@@ -39,7 +41,7 @@ The power of `vuer` starts truly shining when we are able to let Vue communicate
 
 It is dead-simple to let Vue communicate with Shiny. All it takes is adding an underscore at the end of any data variable passed to `Vue`. This automatically sets up watcher functions to update shiny when the underlying value changes, thereby triggering any reactive paths that depend on it. This example is very similar to the first one in that we let a user enter their name and display a greeting message. The key difference is that the greeting message is from Shiny on the server side.
 
-```{r}
+```r
 ui <- fluidPage(theme = shinythemes::shinytheme("cosmo"),
   tags$div(
     tags$label('Enter your name'),
@@ -66,7 +68,7 @@ shinyApp(ui = ui, server = server)
 
 It is equally easy to let Shiny communicate with Vue. In this example we pass the coordinates of a plot brush to Vue and display it as JSON.
 
-```{r}
+```r
 library(shiny)
 library(ggplot2)
 library(vuer)
