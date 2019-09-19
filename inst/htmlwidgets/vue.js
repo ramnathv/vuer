@@ -8,6 +8,7 @@ HTMLWidgets.widget({
 
     // TODO: define shared variables for this instance
     var app = {};
+    Vue.config.devtools = true;
 
     return {
 
