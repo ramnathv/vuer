@@ -42,9 +42,7 @@ ui <- div(
     data = list(colors_ = '#fff')
   )
 
-Vue(
-  data = list(colors_ = '#fff')
-)server <- function(input, output, session){
+server <- function(input, output, session){
    output$plot <- renderPlot({
      mycolor <- if (is.null(input$colors)) 'black' else input$colors$hex[1]
      ggplot(mtcars, (aes(x = wt, y = mpg))) +
