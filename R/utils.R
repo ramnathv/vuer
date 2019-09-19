@@ -35,13 +35,22 @@ appendDependencies <- function (x, value){
 #' @export vtags
 vtags <- names(htmltools::tags) %>%
   purrr::map(~ function(...){
-    contents <- list(...)
-    if (!is.null(names(contents))){
-      names(contents) <- gsub("^v(.*)", "v-\\1", names(contents))
-      names(contents) <- gsub(
-        "^v-([^\\.]*)(\\.)(.*)$", "v-\\1:\\3", names(contents)
-      )
-    }
-    htmltools::tag(.x, contents)
+    vtag(.x, list(...))
   }) %>%
   rlang::set_names(names(tags))
+
+#' Vue Tag
+#'
+#'
+#' @export
+#' @examples
+#' vtag("input", list(type = "text", vmodel = "message"))
+vtag <- function(`_tag_name`, varArgs){
+  if (!is.null(names(varArgs))){
+    names(varArgs) <- gsub("^v(.*)", "v-\\1", names(varArgs))
+    names(varArgs) <- gsub(
+      "^v-([^\\.]*)(\\.)(.*)$", "v-\\1:\\3", names(varArgs)
+    )
+  }
+  htmltools::tag(`_tag_name`, varArgs)
+}

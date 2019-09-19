@@ -1,17 +1,16 @@
 library(htmltools)
 library(vuer)
-library(magrittr)
 
 # Example 1: Hello World
 
-tags$div("{{ message }}") %>%
+vtags$div("{{ message }}") %>%
   Vue(data = list(message = 'Hello World'))
 
 # Example 2:
 
 
-tags$span(
-    "v-bind:title" = "message",
+vtags$span(
+    vbind.title = "message",
     "Hover your mouse over me for a few seconds to see my dynamically bound title!"
 ) %>%
   Vue(data = list(
@@ -21,24 +20,24 @@ tags$span(
 # Example 3:
 
 tags$div(id = 'app',
-  tags$h3("Use the checkbox to toggle visibility of the message"),
-  tags$input(type = "checkbox", "v-model" = "seen"),
-  tags$span("v-if" = "seen", "Now you see me again")
+  vtags$h3("Use the checkbox to toggle visibility of the message"),
+  vtags$input(type = "checkbox", vmodel = "seen"),
+  vtags$span(vif = "seen", "Now you see me again")
 ) %>%
   Vue(data = list(seen = TRUE))
 
 # Example 4: Lists
 
-tags$li("v-for" = "column in columns", "{{ column }}") %>%
+vtags$li(vfor = "column in columns", "{{ column }}") %>%
   tags$ul(id = 'app') %>%
   Vue(data = list(columns = names(mtcars)))
 
 # Example 5:
 
 tags$div(id = 'app',
-  tags$input(type = 'text', "v-model" = "message"),
+  vtags$input(type = 'text', vmodel = "message"),
   tags$p("{{ message }}"),
-  tags$button("v-on:click" = "reverseMessage", "Reverse Message")
+  vtags$button(von.click = "reverseMessage", "Reverse Message")
 ) %>%
   Vue(
     data = list(message = 'Hello World'),
@@ -49,18 +48,3 @@ tags$div(id = 'app',
     )
   )
 
-# Example 6
-
-tags$div(id = "app",
-  tags$button("v-on:click" = "handleClick",
-    "Clicked {{ count }} {{ count === 1 ? 'time' : 'times' }}"
-  )
-) %>%
-  Vue(
-    data = list(count = 0),
-    methods = list(
-      handleClick = htmlwidgets::JS("function(){
-        this.count += 1
-      }")
-    )
-  )

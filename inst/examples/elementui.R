@@ -24,11 +24,11 @@ create_tags <- function(types, prefix){
   types %>%
     purrr::map(~ {
       function(...){
-        tag(paste0(prefix, '-', .x), list(...))
+        vtag(paste0(prefix, '-', .x), list(...))
       }
     }) %>%
     rlang::set_names(
-      tag_types %>%
+      types %>%
         stringr::str_replace("-", "_")
     )
 }

@@ -36,6 +36,7 @@ data <- list(
   )
 )
 
+library(shiny)
 ui <- div(
   vueApexChart(height = 350, ":series" = "series", type = "bar",
     ":options" = "chartOptions"

@@ -3,11 +3,13 @@ library(ggplot2)
 library(shiny)
 
 html_dependencies_vue_color <- function(){
-  htmltools::htmlDependency(
-    name = 'vue-color',
-    version = '2.7.0',
-    src = c(href = 'https://unpkg.com/vue-color/dist'),
-    script = 'vue-color.min.js'
+  list(
+    htmltools::htmlDependency(
+      name = 'vue-color',
+      version = '2.7.0',
+      src = c(href = 'https://unpkg.com/vue-color/dist'),
+      script = 'vue-color.min.js'
+    )
   )
 }
 
@@ -25,10 +27,12 @@ vueColorPickerInput <- function(type = types, ...){
   htmltools::tag(
     sprintf("%s-picker", type), list("v-model" = "colors", ...)
   ) %>%
-    appendDependencies(list(html_dependencies_vue_color()))
+    appendDependencies(html_dependencies_vue_color())
 }
 
 
+vueColorPickerInput(type = "sketch") %>%
+  Vue(data = list(colors_ = '#fff'))
 
 ui <- div(
   vueColorPickerInput(type = "sketch"),
@@ -38,7 +42,9 @@ ui <- div(
     data = list(colors_ = '#fff')
   )
 
-server <- function(input, output, session){
+Vue(
+  data = list(colors_ = '#fff')
+)server <- function(input, output, session){
    output$plot <- renderPlot({
      mycolor <- if (is.null(input$colors)) 'black' else input$colors$hex[1]
      ggplot(mtcars, (aes(x = wt, y = mpg))) +

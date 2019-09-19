@@ -10,13 +10,13 @@ mint <- htmlDependency(
 
 ui <- tags$div(
   #tags$script("Vue.use(MINT)"),
-    tag("mt-switch",list("v-model"="value","{{value ? 'on' : 'off'}}")),
-    tag(
+    vtag("mt-switch",list(vmodel ="value","{{value ? 'on' : 'off'}}")),
+    vtag(
       "mt-checklist",
       list(
         title="checkbox list",
-        "v-model"="checkbox_value",
-        ":options"="['Item A', 'Item B', 'Item C']"
+        vmodel = "checkbox_value",
+        vbind.options = "['Item A', 'Item B', 'Item C']"
       )
     ),
     tags$p("Vue: {{ value }}"),

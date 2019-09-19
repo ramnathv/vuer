@@ -1,3 +1,4 @@
+# Load Libraries ----
 library(shiny)
 library(treemap)
 library(vuer)
@@ -5,7 +6,12 @@ library(magrittr)
 library(htmltools)
 library(htmlwidgets)
 library(d3r)
+jsFun <- function(body, ...){
+  args <- paste(c(...), collapse = ",")
+  htmlwidgets::JS(sprintf("function(%s){%s}", args, body))
+}
 
+# Define Dependencies ----
 html_dependencies_d2b <- function(){
   list(
     d3r::d3_dep_v4(offline = FALSE),
@@ -18,6 +24,7 @@ html_dependencies_d2b <- function(){
   )
 }
 
+# Define Chart Generator
 vueSunburstChart <- function(...){
   vuer::vueComponents$register(
     "sunburst-chart" = "d2b.vueChartSunburst"
@@ -26,12 +33,9 @@ vueSunburstChart <- function(...){
     appendDependencies(html_dependencies_d2b())
 }
 
-jsFun <- function(body, ...){
-  args <- paste(c(...), collapse = ",")
-  htmlwidgets::JS(sprintf("function(%s){%s}", args, body))
-}
 
 
+# UI ----
 ui <- tags$div(style = 'height:400px',
   vueSunburstChart(":data" = "chart_data", ":config" = "chart_config"),
   actionButton('update_data', 'Update Data')
@@ -52,6 +56,7 @@ ui <- tags$div(style = 'height:400px',
   )
 
 
+# Server ----
 server <- function(input, output, session){
   observeEvent(input$update_data, {
     vueProxy('mychart') %>%
